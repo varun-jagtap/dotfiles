@@ -10,21 +10,23 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Set up fzf key bindings and fuzzy completion
+# Set up fzf key bindings, fuzzy completion & zoxide
 eval "$(fzf --zsh)"
+eval "$(zoxide init --cmd cd zsh)"
 
 # ALIASES
 alias update="sudo dnf update"
-alias myip="echo 'wlo1:- $(hostname -I | cut -f1 -d' ') \nwlan0:- $(hostname -I | cut -f2 -d' ') \ntun0:- $(hostname -I | cut -f3 -d' ')'"
+alias myip="ip -o -4 addr show | awk '{print \$2\":- \"\$4}' | grep -Ev '^(br-|lo)'"
 alias cat="bat"
-alias nts="cd ~/Dropbox/Note"
-alias blg="cd ~/Dropbox/Blogs"
-
-# SSH ALIAS
-alias ssha='eval $(ssh-agent) && ssh-add'
+alias fzf="fzf --preview 'bat --style=numbers --color=always'"
 
 # EXPORTS
-export PATH=$PATH:/opt/metasploit-framework/bin:~/.local/bin:/opt/RetDec-v5.0/bin
+export PATH=$PATH:/opt/metasploit-framework/bin:~/.local/bin:~/.cargo/bin
+# export XDG_RUNTIME_DIR=/run/user/$(id -u)
+export WORDCHARS="${WORDCHARS//\/}" # Remove / from wordchars
+export BAT_THEME="Solarized (light)"
+export EDITOR='nvim'
+export MANPAGER="bat -plman"
 
 # DOCKER CONTAINERS
 
@@ -35,33 +37,33 @@ alias kali="sudo docker exec -it -u varun -w /home/varun kali zsh"
 alias blackarch="sudo docker exec -it -u varun -w /home/varun blackarch zsh"
 
 # UBUNTU 22.04 LTS
-alias ubuntu-start="sudo docker start ubuntu"
-alias ubuntu="sudo docker exec -it -u varun -w /home/varun ubuntu zsh"
+# alias ubuntu-start="sudo docker start ubuntu"
+# alias ubuntu="sudo docker exec -it -u varun -w /home/varun ubuntu zsh"
 
 # ARCH LINUX
-alias arch-start="sudo docker start archlinux"
-alias archlinux="sudo docker exec -it -u varun -w /home/varun archlinux fish"
-
-# ANSIBLE 
-# alias ansible-serv="sudo docker start server1 server2"
+# alias arch-start="sudo docker start archlinux"
+# alias archlinux="sudo docker exec -it -u varun -w /home/varun archlinux fish"
 
 # ---- Eza (better ls) -----
 alias ls="eza --icons=always"
 alias lls="eza -lhg"
 
 # History setup
-HISTFILE=$HOME/.zhistory
+HISTFILE=$HOME/.zsh_history
 SAVEHIST=10000
 HISTSIZE=10000
 setopt share_history
-setopt hist_expire_dups_first
+setopt hist_ignore_all_dups
 setopt hist_ignore_dups
 setopt hist_verify
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-eval "$(zoxide init --cmd cd zsh)"
+# bun completions
+[ -s "/home/varun/.bun/_bun" ] && source "/home/varun/.bun/_bun"
 
-export BAT_THEME="Solarized (light)"
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+. "/home/varun/.deno/env"
 
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -80,12 +82,14 @@ white='\033[1;97m'
 # 		$blue┃ $grn  ┗━━━━┛    ┗━┛   ┗━━━━━┛ ┗━━━━━━┛┗━┛  ┗━┛ $blue      ┗━┛   ┗━┛  ┗━┛┗━┛  ┗━┛ ┗━━━━━┛ ┗━┛  ┗━━┛ $grn┃
 # 		$blue┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$grn━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛  "
 
- echo -e "
-		$blue┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$grn━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-		$blue┃ $grn ██┓   ██┓ █████┓ ██████┓ ██┓   ██┓██┓   ██┓ $blue     ████████┓███████┓██████┓ ██┓  ██┓   $grn┃
-		$blue┃ $grn ██┃   ██┃██┏━━██┓██┏━━██┓██┃   ██┃████┓ ██┃ $blue     ┗━━██┏━━┛██┏━━━━┛██┏━━██┓██┃  ██┃   $grn┃
-		$blue┃ $grn ┗██┓ ██┏┛███████┃██████┏┛██┃   ██┃██┏██┓██┃ $blue        ██┃   █████┓  ██┃  ┗━┛███████┃   $grn┃
-		$blue┃ $grn  ┗████┏┛ ██┏━━██┃██┏━━██┓██┃   ██┃██┃┗████┃ $blue        ██┃   ██┏━━┛  ██┃  ██┓██┏━━██┃   $grn┃
-		$blue┃ $grn   ┗██┏┛  ██┃  ██┃██┃  ██┃┗██████┏┛██┃ ┗███┃ $blue        ██┃   ███████┓┗█████┏┛██┃  ██┃   $grn┃
-		$blue┃ $grn    ┗━┛   ┗━┛  ┗━┛┗━┛  ┗━┛ ┗━━━━━┛ ┗━┛  ┗━━┛ $blue        ┗━┛   ┗━━━━━━┛ ┗━━━━┛ ┗━┛  ┗━┛   $grn┃
-		$blue┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$grn━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛     "
+# echo -e "
+#		$blue┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$grn━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+#		$blue┃ $grn ██┓   ██┓ █████┓ ██████┓ ██┓   ██┓██┓   ██┓ $blue     ████████┓███████┓██████┓ ██┓  ██┓   $grn┃
+#		$blue┃ $grn ██┃   ██┃██┏━━██┓██┏━━██┓██┃   ██┃████┓ ██┃ $blue     ┗━━██┏━━┛██┏━━━━┛██┏━━██┓██┃  ██┃   $grn┃
+#		$blue┃ $grn ┗██┓ ██┏┛███████┃██████┏┛██┃   ██┃██┏██┓██┃ $blue        ██┃   █████┓  ██┃  ┗━┛███████┃   $grn┃
+#		$blue┃ $grn  ┗████┏┛ ██┏━━██┃██┏━━██┓██┃   ██┃██┃┗████┃ $blue        ██┃   ██┏━━┛  ██┃  ██┓██┏━━██┃   $grn┃
+#		$blue┃ $grn   ┗██┏┛  ██┃  ██┃██┃  ██┃┗██████┏┛██┃ ┗███┃ $blue        ██┃   ███████┓┗█████┏┛██┃  ██┃   $grn┃
+#		$blue┃ $grn    ┗━┛   ┗━┛  ┗━┛┗━┛  ┗━┛ ┗━━━━━┛ ┗━┛  ┗━━┛ $blue        ┗━┛   ┗━━━━━━┛ ┗━━━━┛ ┗━┛  ┗━┛   $grn┃
+#		$blue┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$grn━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛     "
+
+
