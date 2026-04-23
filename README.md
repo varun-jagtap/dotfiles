@@ -89,7 +89,7 @@ for understanding tmux keybindings you watch this [video](https://youtu.be/U-omA
 
 If you are on Ubuntu download the latest version from github repository of tools.
 
-⚠️ The following zsh configurations are created for fedora. It can work on other distros but don't forget to change the aliases according to you distros. 
+⚠️The following zsh configurations are created for fedora. It can work on other distros but don't forget to change the aliases according to you distros. 
 
 To install execute.
 
@@ -98,3 +98,19 @@ stow zsh
 ```
 
 ![ZSH Preview](./src/zsh_preview.png)
+
+## Sway
+
+⚠️The configurations are modified version of [Endeavour OS Sway](https://github.com/EndeavourOS-Community-Editions/sway). The official version of Endeavour OS sway should be installed. Configurations in this repository are just minor changes according my setup and not required to install at all.
+
+### Requirements
+
+- [Endeavour OS Sway](https://github.com/EndeavourOS-Community-Editions/sway)
+
+To install execute
+
+```
+stow sway
+```
+
+![Sway Preview](./src/sway_preview.png)
