@@ -35,6 +35,8 @@ sudo pacman -S stow -y
 ### Requirements
 - python3-pip
 - npm
+- make
+- gcc
 
 To install execute
 
