@@ -29,19 +29,9 @@ return {
 			ensure_installed = {
 				"html",
 				"cssls",
-				"ansiblels",
 				"clangd",
-				"cmake",
-				"docker_compose_language_service",
-				"dockerls",
 				"jsonls",
-				"lua_ls",
-				"markdown_oxide",
-				"pyright",
-				"snyk_ls",
-				"taplo",
 				"vimls",
-				"yamlls",
 			},
 		})
 		mason_tool_installer.setup({
@@ -52,7 +42,6 @@ return {
 				"black", -- python formatter
 				"pylint",
 				"markdownlint",
-				"textlint",
 			},
 		})
 	end,
